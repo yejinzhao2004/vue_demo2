@@ -51,7 +51,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getLandlordName, setOrder, getBalance } from '@/util/api'
+import { getLandlordName, setOrder, getBalance, payDeposit } from '@/util/api'
 
 // 定义组件 props
 const props = defineProps({
@@ -82,13 +82,14 @@ const address = computed(() => props.houseInfo.position || '')
 const landlordName = ref('')
 const tenantName = ref('')
 const leaseTerm = ref('一年')
-const deposit = computed(() => price.value * 3)
-const paymentMethod = ref('押一付一')
+const deposit = computed(() => price.value * 2)
+const paymentMethod = ref('押二付一')
 const landlordPhoneNumber = ref('')
 const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}')
 const position = computed(() => props.houseInfo.position || '')
 const regulations = ref('违约责任及其他条款...')
 const showDialog = ref(true)
+const houseId = computed(() => props.houseInfo.id)
 const getLandlord = async () => {
   let result = getLandlordName(props.houseInfo.id)
   return result
@@ -117,7 +118,7 @@ const signContract = async () => {
   submitting.value = true
   const balance = await getBalance(userId)
   ElMessageBox.confirm(
-    `确认支付押金${price.value}到账户${landlordName.value}吗？当前账户余额为${balance}`,
+    `确认支付押金${deposit.value}到账户${landlordName.value}吗？当前账户余额为${balance}`,
     '提示',
     {
       confirmButtonText: '确定',
@@ -127,20 +128,27 @@ const signContract = async () => {
   )
     .then(async () => {
       try {
-        const data = {
-          renter: tenantName.value,
-          landlord: landlordName.value,
-          landlord_phone: landlordPhoneNumber.value,
-          renter_phone: userInfo.phone_number,
-          house: props.houseInfo.house_number,
-          price: price.value,
-          position: position.value,
-          regulations: regulations.value,
-          rental_duration: leaseTerm.value,
-          deposit: deposit.value,
-          payment_method: paymentMethod.value,
+        if (balance < price.value) {
+          ElMessage.error('余额不足，请充值!')
+        } else {
+          const data = {
+            renter: tenantName.value,
+            landlord: landlordName.value,
+            landlord_phone: landlordPhoneNumber.value,
+            renter_phone: userInfo.phone_number,
+            house: props.houseInfo.house_number,
+            price: price.value,
+            position: position.value,
+            regulations: regulations.value,
+            rental_duration: leaseTerm.value,
+            deposit: deposit.value,
+            payment_method: paymentMethod.value,
+          }
+          const result = await setOrder(data)
+          if (result === 200) {
+            await payDeposit(userId, deposit.value, houseId.value)
+          }
         }
-        await setOrder(data)
       } catch (error) {
         console.error('签署失败:', error)
         ElMessage.error('签署失败，请稍后重试')

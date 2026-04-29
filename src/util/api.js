@@ -117,6 +117,7 @@ export const setOrder = async (info) => {
   } else {
     ElMessage.error(result.data.errorInfo)
   }
+  return result.data.code
 }
 export const getLandlordName = async (info) => {
   let result = await requestUtil.post('house/GetLandlordName', { house_id: info })
@@ -328,5 +329,18 @@ export const getHouseList = async (id) => {
     return data.houseList
   } else {
     ElMessage.error(data.errorInfo)
+  }
+}
+
+export const payDeposit = async (userId, deposit, houseId) => {
+  let result = await requestUtil.post('user/PayDeposit', {
+    user_id: userId,
+    deposit: deposit,
+    house_id: houseId,
+  })
+  if (result.data.code == 200) {
+    ElMessage.success('支付成功,账号余额为' + result.data.balance)
+  } else {
+    ElMessage.error(result.data.errorInfo)
   }
 }
