@@ -1,6 +1,15 @@
 import requestUtil from '@/util/request'
 import { ElMessage } from 'element-plus'
 
+export const getBalance = async (info) => {
+  let result = await requestUtil.post('user/GetBalance', info)
+  if (result.data.code == 200) {
+    return result.data.balance
+  } else {
+    ElMessage.error(result.data.errorInfo)
+    return null
+  }
+}
 export const adminGetReservationList = async (info) => {
   let result = await requestUtil.post('admin/AdminGetReservationList', info)
   if (result.data.code == 200) {

@@ -51,7 +51,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getLandlordName, setOrder } from '@/util/api'
+import { getLandlordName, setOrder, getBalance } from '@/util/api'
 
 // 定义组件 props
 const props = defineProps({
@@ -65,17 +65,6 @@ const props = defineProps({
   },
 })
 
-watch(
-  () => props.modelValue,
-  async () => {
-    const data = await getLandlord()
-    landlordName.value = data.landlord_name
-    landlordPhoneNumber.value = data.landlord_phone_number
-    agreed.value = false
-    submitting.value = false
-    tenantName.value = userInfo.username
-  },
-)
 // 定义 emits
 // update:modelValue是父组件向子组件传递的参数，控制弹窗的显示和隐藏
 // signed是子组件向父组件传递的参数，表示合同签署成功
@@ -83,7 +72,7 @@ const emit = defineEmits(['close'])
 
 const agreed = ref(false) //作用是记录用户是否同意合同条款
 const submitting = ref(false) //创建一个用于控制签署流程的布尔值
-
+const userId = JSON.parse(sessionStorage.getItem('user')).id
 // 合同相关信息
 const dialogTitle = '房屋租赁合同签署'
 const contractTitle = computed(() => `房屋租赁合同 - ${props.houseInfo.house_number || ''}`)
@@ -114,7 +103,6 @@ const handleClose = () => {
     cancelButtonText: '取消',
     type: 'warning',
   }).then(() => {
-    agreed.value = false
     emit('close')
   })
 }
@@ -127,39 +115,55 @@ const signContract = async () => {
   }
 
   submitting.value = true
-
-  try {
-    const data = {
-      renter: tenantName.value,
-      landlord: landlordName.value,
-      landlord_phone: landlordPhoneNumber.value,
-      renter_phone: userInfo.phone_number,
-      house: props.houseInfo.house_number,
-      price: price.value,
-      position: position.value,
-      regulations: regulations.value,
-      rental_duration: leaseTerm.value,
-      deposit: deposit.value,
-      payment_method: paymentMethod.value,
-    }
-    await setOrder(data)
-    console.log('签署合同:', {
-      houseId: props.houseInfo.id,
-      houseNumber: props.houseInfo.house_number,
-      tenantName: tenantName.value,
-      landlordName: landlordName.value,
-      price: price.value,
-      deposit: deposit.value,
-      leaseTerm: leaseTerm.value,
+  const balance = await getBalance(userId)
+  ElMessageBox.confirm(
+    `确认支付押金${price.value}到账户${landlordName.value}吗？当前账户余额为${balance}`,
+    '提示',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    },
+  )
+    .then(async () => {
+      try {
+        const data = {
+          renter: tenantName.value,
+          landlord: landlordName.value,
+          landlord_phone: landlordPhoneNumber.value,
+          renter_phone: userInfo.phone_number,
+          house: props.houseInfo.house_number,
+          price: price.value,
+          position: position.value,
+          regulations: regulations.value,
+          rental_duration: leaseTerm.value,
+          deposit: deposit.value,
+          payment_method: paymentMethod.value,
+        }
+        await setOrder(data)
+      } catch (error) {
+        console.error('签署失败:', error)
+        ElMessage.error('签署失败，请稍后重试')
+      } finally {
+        emit('close')
+      }
     })
-    emit('close')
-  } catch (error) {
-    console.error('签署失败:', error)
-    ElMessage.error('签署失败，请稍后重试')
-  } finally {
-    submitting.value = false
-  }
+    .catch(() => {
+      submitting.value = false
+    })
 }
+
+watch(
+  () => props.modelValue,
+  async () => {
+    const data = await getLandlord()
+    landlordName.value = data.landlord_name
+    landlordPhoneNumber.value = data.landlord_phone_number
+    agreed.value = false
+    submitting.value = false
+    tenantName.value = userInfo.username
+  },
+)
 
 onMounted(async () => {
   const data = await getLandlord()
