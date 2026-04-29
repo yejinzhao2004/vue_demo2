@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getLandlordName, setOrder } from '@/util/api'
 
@@ -59,8 +59,23 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
   },
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
 })
 
+watch(
+  () => props.modelValue,
+  async () => {
+    const data = await getLandlord()
+    landlordName.value = data.landlord_name
+    landlordPhoneNumber.value = data.landlord_phone_number
+    agreed.value = false
+    submitting.value = false
+    tenantName.value = userInfo.username
+  },
+)
 // 定义 emits
 // update:modelValue是父组件向子组件传递的参数，控制弹窗的显示和隐藏
 // signed是子组件向父组件传递的参数，表示合同签署成功
@@ -79,13 +94,12 @@ const landlordName = ref('')
 const tenantName = ref('')
 const leaseTerm = ref('一年')
 const deposit = computed(() => price.value * 3)
-const paymentMethod = ref('押三付一')
+const paymentMethod = ref('押一付一')
 const landlordPhoneNumber = ref('')
 const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}')
 const position = computed(() => props.houseInfo.position || '')
 const regulations = ref('违约责任及其他条款...')
 const showDialog = ref(true)
-
 const getLandlord = async () => {
   let result = getLandlordName(props.houseInfo.id)
   return result
@@ -99,12 +113,10 @@ const handleClose = () => {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning',
+  }).then(() => {
+    agreed.value = false
+    emit('close')
   })
-    .then(() => {
-      emit('close')
-      agreed.value = false
-    })
-    .catch(() => {})
 }
 
 // 处理签署合同

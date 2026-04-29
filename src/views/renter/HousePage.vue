@@ -183,7 +183,7 @@
     <ReportDialog :house="reportedHouse" @close="reportVisible = false" />
   </el-dialog>
   <el-dialog v-model="signVisible" :width="600">
-    <SignDialog :house-info="signHouse" @close="signVisible = false" />
+    <SignDialog v-model="signVisible" :house-info="signHouse" @close="signVisible = false" />
   </el-dialog>
 </template>
 
