@@ -14,7 +14,7 @@
           <div>{{ item.house_number }}</div>
         </div>
         <div class="card-content">
-          <span class="label">房东姓名:</span>
+          <span class="label">房东账号:</span>
           <el-tag type="info" effect="light" size="large">{{ item.landlord_name }}</el-tag>
         </div>
         <div class="card-content">

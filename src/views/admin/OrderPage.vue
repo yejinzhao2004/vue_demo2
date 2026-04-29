@@ -6,7 +6,7 @@
     <div class="filter-container">
       <el-input
         v-model="filters.keyword"
-        placeholder="请输入房东名称/租客名称/房源编号/房屋地址"
+        placeholder="请输入房东账号/租客账号/房源编号/房屋地址"
         class="search-input"
         clearable
       />
@@ -24,7 +24,7 @@
       <el-card v-for="(item, index) in filteredOrderData" :key="index" class="order-card">
         <div v-if="item.visible">
           <div class="order-header">
-            <span class="label">房东名称:</span>
+            <span class="label">房东账号:</span>
             <div>{{ item.landlord }}</div>
           </div>
           <div class="order-content">
@@ -32,7 +32,7 @@
             <el-tag type="info" effect="light" size="large">{{ item.renter_phone }}</el-tag>
           </div>
           <div class="order-header">
-            <span class="label">租客名称:</span>
+            <span class="label">租客账号:</span>
             <div>{{ item.renter }}</div>
           </div>
           <div class="order-content">
@@ -99,11 +99,11 @@
         </div>
         <div v-else>
           <div class="order-header">
-            <span class="label">房东名称:</span>
+            <span class="label">房东账号:</span>
             <div>{{ item.landlord }}</div>
           </div>
           <div class="order-header">
-            <span class="label">租客名称:</span>
+            <span class="label">租客账号:</span>
             <div>{{ item.renter }}</div>
           </div>
           <div class="order-content">
@@ -152,7 +152,7 @@ const filters = ref({
 // 计算属性：根据筛选条件过滤订单数据
 const filteredOrderData = computed(() => {
   return orderData.value.filter((item) => {
-    // 关键字筛选：匹配房东名称、租客名称、房源编号或房屋地址
+    // 关键字筛选：匹配房东账号、租客账号、房源编号或房屋地址
     const matchesKeyword =
       !filters.value.keyword ||
       item.landlord.toLowerCase().includes(filters.value.keyword.toLowerCase()) ||

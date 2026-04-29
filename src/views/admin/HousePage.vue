@@ -6,7 +6,7 @@
     <div class="filter-container">
       <el-input
         v-model="searchQuery"
-        placeholder="搜索房产编号、地址或房东名称"
+        placeholder="搜索房产编号、地址或房东账号"
         class="search-input"
         clearable
       >
@@ -54,7 +54,7 @@
           </div>
 
           <div class="detail-row">
-            <span class="label">房东名称：</span>
+            <span class="label">房东账号：</span>
             <el-tag type="info" effect="light">{{ house.landlord_name }}</el-tag>
           </div>
 

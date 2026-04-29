@@ -11,7 +11,7 @@
           <AvatarUpload :user="currentUser" />
           <ul class="list-group-striped">
             <li class="list-group-item">
-              <el-icon> <User /> </el-icon>&nbsp;用户名称
+              <el-icon> <User /> </el-icon>&nbsp;用户账号
               <div class="pull-right">{{ currentUser.username }}</div>
             </li>
             <li class="list-group-item">

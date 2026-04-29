@@ -160,7 +160,7 @@
         <el-descriptions-item label="朝向">
           {{ currentHouse.face }}
         </el-descriptions-item>
-        <el-descriptions-item label="房东名字">
+        <el-descriptions-item label="房东账号">
           {{ currentHouse.landlord_name }}
         </el-descriptions-item>
         <el-descriptions-item label="电话号码">

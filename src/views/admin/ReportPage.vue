@@ -23,7 +23,7 @@
     <div v-if="filteredReportData && filteredReportData.length > 0" class="report-list">
       <el-card v-for="(item, index) in filteredReportData" :key="index" class="report-card">
         <div class="report-header">
-          <span class="label">举报人名称:</span>
+          <span class="label">举报人账号:</span>
           <div>{{ item.reporter_name }}</div>
         </div>
         <div class="report-content">

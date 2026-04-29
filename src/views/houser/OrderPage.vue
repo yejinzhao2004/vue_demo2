@@ -11,7 +11,7 @@
       >
         <div v-if="item.order_visible">
           <div class="card-header">
-            <span class="label">租客名称:</span>
+            <span class="label">租客账号:</span>
             <div>{{ item.renter }}</div>
           </div>
           <div class="card-content">
@@ -83,7 +83,7 @@
         </div>
         <div v-else>
           <div class="card-header">
-            <span class="label">租客名称:</span>
+            <span class="label">租客账号:</span>
             <div>{{ item.renter }}</div>
           </div>
           <div class="card-content">

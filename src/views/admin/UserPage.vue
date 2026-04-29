@@ -5,8 +5,8 @@
     <!-- 筛选表单 -->
     <el-card class="filter-card" shadow="never">
       <el-form :inline="true" :model="filterForm" class="filter-form">
-        <el-form-item label="用户名称">
-          <el-input v-model="filterForm.username" placeholder="请输入用户名称" clearable />
+        <el-form-item label="用户账号">
+          <el-input v-model="filterForm.username" placeholder="请输入用户账号" clearable />
         </el-form-item>
         <el-form-item label="账号身份">
           <el-select
@@ -158,7 +158,7 @@ const formatStatus = (status) => {
 // 计算属性：根据筛选条件过滤用户数据
 const filteredUsers = computed(() => {
   return userData.value.filter((user) => {
-    // 用户名称筛选
+    // 用户账号筛选
     const matchesUsername =
       !filterForm.value.username ||
       user.username.toLowerCase().includes(filterForm.value.username.toLowerCase())

@@ -2,12 +2,8 @@
   <!-- userRef取的是el-form的表单实例，内部带的数据就是prop索引的phonenumber和email -->
   <div class="background">
     <el-form ref="userRef" :model="form" :rules="rules" label-width="100px" class="rental-app">
-      <el-form-item label="用户名：" prop="username">
-        <el-input
-          v-model="form.username"
-          maxlength="50"
-          placeholder="请输入用户名"
-        /> </el-form-item
+      <el-form-item label="账号：" prop="username">
+        <el-input v-model="form.username" maxlength="50" placeholder="请输入账号" /> </el-form-item
       ><el-form-item label="密码：" prop="password">
         <el-input
           v-model="form.password"
