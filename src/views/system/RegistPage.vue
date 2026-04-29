@@ -14,7 +14,7 @@
           maxlength="50"
           type="password"
           show-password
-          placeholder="请输入密码1"
+          placeholder="请输入密码"
         />
       </el-form-item>
       <el-form-item label="手机号码：" prop="phone_number">
