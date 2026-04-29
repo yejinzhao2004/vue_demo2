@@ -30,7 +30,7 @@ const router = createRouter({
         {
           path: 'userCenter',
           name: '个人中心',
-          component: () => import('../components/UserCenter.vue'),
+          component: () => import('../views/system/UserCenter.vue'),
         },
         {
           path: 'admin',
