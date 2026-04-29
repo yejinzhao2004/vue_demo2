@@ -12,9 +12,8 @@
       />
 
       <el-select v-model="filters.status" placeholder="请选择状态" class="status-select" clearable>
-        <el-option label="待确认" value="待确认" />
         <el-option label="租赁中" value="租赁中" />
-        <el-option label="已取消" value="已取消" />
+        <el-option label="已完成" value="已完成" />
       </el-select>
 
       <el-button type="primary" @click="resetFilters">重置</el-button>
@@ -91,7 +90,6 @@
 
           <div class="order-actions" v-if="item.status !== '租赁中'">
             <el-button type="primary" @click="item.visible = false">收起内容</el-button>
-            <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
           <div class="order-actions" v-else>
             <el-button type="primary" @click="item.visible = false">收起内容</el-button>
@@ -121,11 +119,7 @@
               {{ item.status }}
             </el-tag>
           </div>
-          <div class="order-actions" v-if="item.status !== '租赁中'">
-            <el-button type="primary" @click="item.visible = true">查看详情</el-button>
-            <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
-          </div>
-          <div class="order-actions" v-else>
+          <div class="order-actions">
             <el-button type="primary" @click="item.visible = true">查看详情</el-button>
           </div>
         </div>
@@ -138,9 +132,8 @@
 </template>
 
 <script setup>
-import { deleteOrder, getOrderList } from '@/util/api'
+import { getOrderList } from '@/util/api'
 import { onMounted, ref, computed } from 'vue'
-import { ElMessageBox } from 'element-plus'
 
 let orderData = ref([])
 // 筛选条件
@@ -178,9 +171,7 @@ const resetFilters = () => {
 // 状态类型映射
 const getStatusType = (status) => {
   const statusMap = {
-    待确认: 'warning',
     租赁中: 'success',
-    已取消: 'danger',
     已完成: 'info',
   }
   return statusMap[status] || 'info'
@@ -190,24 +181,6 @@ const getStatusType = (status) => {
 const formatPrice = (price) => {
   if (!price) return '¥ 0.00'
   return `¥ ${parseFloat(price).toFixed(2)}`
-}
-
-const delete_order = async (orderId) => {
-  try {
-    await ElMessageBox.confirm('确定要删除这个订单？', '删除订单', {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-
-    await deleteOrder(orderId)
-    const updatedOrder = await getOrderList()
-    orderData.value = updatedOrder.data
-  } catch (error) {
-    if (error !== 'cancel') {
-      console.error(error)
-    }
-  }
 }
 
 onMounted(async () => {

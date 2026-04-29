@@ -122,9 +122,7 @@ let orderData = ref([])
 // 状态类型映射
 const getStatusType = (status) => {
   const statusMap = {
-    待确认: 'warning',
     租赁中: 'success',
-    已取消: 'danger',
     已完成: 'info',
   }
   return statusMap[status] || 'info'

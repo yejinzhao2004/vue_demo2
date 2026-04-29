@@ -65,15 +65,7 @@
             <span class="label">合约条例:</span>
             <el-tag type="info" effect="light" size="large">{{ item.regulations }}</el-tag>
           </div>
-
-          <!-- 当状态为预约待确认时显示操作按钮 -->
-          <div class="card-actions" v-if="item.status === '待确认'">
-            <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
-            <el-button type="primary" @click="confirm_order(item.id)">确认</el-button>
-            <el-button type="danger" @click="cancel_order(item.id)">取消</el-button>
-          </div>
-
-          <div class="card-actions" v-if="item.status === '已取消' || item.status === '已完成'">
+          <div class="card-actions" v-if="item.status === '已完成'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
             <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
@@ -100,13 +92,7 @@
               {{ item.status }}
             </el-tag>
           </div>
-          <div class="card-actions" v-if="item.status === '待确认'">
-            <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
-            <el-button type="primary" @click="confirm_order(item.id)">确认</el-button>
-            <el-button type="danger" @click="cancel_order(item.id)">取消</el-button>
-          </div>
-
-          <div class="card-actions" v-if="item.status === '已取消' || item.status === '已完成'">
+          <div class="card-actions" v-if="item.status === '已完成'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
             <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
@@ -127,7 +113,7 @@
 import { getOrder } from '@/util/api'
 import { onMounted, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
-import { confirmOrder, cancelOrder, deleteOrder } from '@/util/api'
+import { deleteOrder } from '@/util/api'
 
 const landlordName = JSON.parse(window.sessionStorage.getItem('user')).username
 let orderData = ref([])
@@ -135,9 +121,7 @@ let orderData = ref([])
 // 状态类型映射
 const getStatusType = (status) => {
   const statusMap = {
-    待确认: 'warning',
     租赁中: 'success',
-    已取消: 'danger',
     已完成: 'info',
   }
   return statusMap[status] || 'info'
@@ -147,43 +131,6 @@ const getStatusType = (status) => {
 const formatPrice = (price) => {
   if (!price) return '¥ 0.00'
   return `¥ ${parseFloat(price).toFixed(2)}`
-}
-
-// 确认订单
-const confirm_order = async (orderId) => {
-  try {
-    await ElMessageBox.confirm('确定要确认这个订单？', '确认订单', {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-
-    await confirmOrder(orderId)
-    const updatedOrder = await getOrder(landlordName)
-    orderData.value = updatedOrder
-  } catch (error) {
-    if (error !== 'cancel') {
-      console.error(error)
-    }
-  }
-}
-// 取消订单
-const cancel_order = async (orderId) => {
-  try {
-    await ElMessageBox.confirm('确定要取消这个订单吗？', '取消订单', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-
-    await cancelOrder(orderId)
-    const updatedOrder = await getOrder(landlordName)
-    orderData.value = updatedOrder
-  } catch (error) {
-    if (error !== 'cancel') {
-      console.error(error)
-    }
-  }
 }
 
 const delete_order = async (orderId) => {
