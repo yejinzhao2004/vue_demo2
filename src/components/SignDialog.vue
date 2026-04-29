@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getLandlordName, setOrder } from '@/util/api'
 
@@ -85,22 +85,6 @@ const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}')
 const position = computed(() => props.houseInfo.position || '')
 const regulations = ref('违约责任及其他条款...')
 const showDialog = ref(true)
-
-// 监听弹窗状态变化
-watch(
-  () => props.modelValue,
-  async (newVal) => {
-    if (newVal) {
-      // 弹窗打开时初始化数据
-      const data = await getLandlord()
-      landlordName.value = data.landlord_name
-      landlordPhoneNumber.value = data.landlord_phone_number
-      agreed.value = false
-      submitting.value = false
-      tenantName.value = userInfo.username
-    }
-  },
-)
 
 const getLandlord = async () => {
   let result = getLandlordName(props.houseInfo.id)
