@@ -125,7 +125,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import { getUserList, updateUserStatus } from '../../util/api.js'
 import { getServerUrl } from '../../util/request.js'
 
@@ -206,11 +206,7 @@ const toggleStatus = async (user) => {
 const loadUserData = async () => {
   loading.value = true
   const response = await getUserList()
-  if (response.code === 200) {
-    userData.value = response.data || []
-  } else {
-    ElMessage.error(response.message || '加载用户数据失败')
-  }
+  userData.value = response
   loading.value = false
 }
 

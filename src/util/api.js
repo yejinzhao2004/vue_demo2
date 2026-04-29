@@ -59,9 +59,10 @@ export const updateUserStatus = async (info) => {
 export const getUserList = async (info) => {
   let result = await requestUtil.post('admin/GetUserList', info)
   if (result.data.code == 200) {
-    return result.data
+    return result.data.data
   } else {
     ElMessage.error(result.data.errorInfo)
+    return null
   }
 }
 export const deleteOrder = async (info) => {
