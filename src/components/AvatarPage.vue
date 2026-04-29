@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown>
+  <el-dropdown trigger="click">
     <span class="el-dropdown-link">
       <el-avatar shape="square" :size="50" :src="avatarUrl" />
       &nbsp;&nbsp;{{ user.username }}

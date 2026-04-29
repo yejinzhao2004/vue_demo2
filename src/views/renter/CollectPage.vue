@@ -35,7 +35,11 @@
               </el-button>
 
               <!-- 管理按钮 - 下拉菜单 -->
-              <el-dropdown @command="handleManageCommand($event, house)" placement="bottom-end">
+              <el-dropdown
+                @command="handleManageCommand($event, house)"
+                placement="bottom-end"
+                trigger="click"
+              >
                 <el-button type="warning" size="large" class="manage-btn">
                   <el-icon><Setting /></el-icon>
                   管理

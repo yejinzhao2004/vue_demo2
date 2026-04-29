@@ -9,12 +9,12 @@ const handleBeforeUnload = async () => {
   await deleteImage(store.state.oldUpload)
 }
 
-// 组件挂载时添加事件监听
+// 组件挂载时添加生命周期钩子
 onMounted(() => {
   window.addEventListener('beforeunload', handleBeforeUnload)
 })
 
-// 组件卸载前移除事件监听，避免内存泄漏
+// 组件卸载前移除生命周期钩子，避免内存泄漏
 onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', handleBeforeUnload)
 })

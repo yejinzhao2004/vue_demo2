@@ -127,7 +127,7 @@ watch(
 
 <style>
 .avatar-uploader .el-upload {
-  border: 3px dashed #d1d1d1;
+  border: 2px dashed #d1d1d1;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
