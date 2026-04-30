@@ -15,6 +15,10 @@
               <div class="pull-right">{{ currentUser.username }}</div>
             </li>
             <li class="list-group-item">
+              <el-icon> <Wallet /> </el-icon>&nbsp;账户余额
+              <div class="pull-right">{{ currentUser.balance }}</div>
+            </li>
+            <li class="list-group-item">
               <el-icon> <Phone /> </el-icon>&nbsp;手机号码
               <div class="pull-right">{{ currentUser.phone_number }}</div>
             </li>
@@ -34,7 +38,7 @@
             </li>
             <li class="list-group-item" style="display: flex">
               <button
-                @click="ifShow = true"
+                @click="ifShow = !ifShow"
                 class="el-button el-button--primary"
                 style="margin-left: auto; margin-right: 20px"
               >
@@ -67,10 +71,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import AvatarUpload from '@/components/AvatarUpload.vue'
 import UpdatePassword from '@/components/UpdatePassword.vue'
 import UserInfo from '@/components/UserInfo.vue'
+import { getBalance } from '@/util/api'
 const currentUser = ref(JSON.parse(sessionStorage.getItem('user')))
 const role = JSON.parse(sessionStorage.getItem('role'))
 const ifShow = ref(false)
@@ -79,6 +84,10 @@ const activeTab = ref('userInfo')
 const handleUserSaved = (newUser) => {
   currentUser.value = newUser
 }
+onMounted(async () => {
+  currentUser.value.balance = await getBalance(currentUser.value.id)
+  console.log('账户余额已获取')
+})
 </script>
 <style scoped>
 .user-center-container {
