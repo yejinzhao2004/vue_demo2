@@ -183,7 +183,12 @@
     <ReportDialog :house="reportedHouse" @close="reportVisible = false" />
   </el-dialog>
   <el-dialog v-model="signVisible" :width="600">
-    <SignDialog v-model="signVisible" :house-info="signHouse" @close="signVisible = false" />
+    <SignDialog
+      v-model="signVisible"
+      :house-info="signHouse"
+      @close="signVisible = false"
+      @signed="signed()"
+    />
   </el-dialog>
 </template>
 
@@ -301,6 +306,10 @@ const report = (house) => {
 const sign = (house) => {
   signVisible.value = true
   signHouse.value = house
+}
+
+const signed = async () => {
+  houseList.value = await getVacantHouse()
 }
 // 在组件挂载时加载数据
 onMounted(async () => {

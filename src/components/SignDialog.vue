@@ -68,7 +68,7 @@ const props = defineProps({
 // 定义 emits
 // update:modelValue是父组件向子组件传递的参数，控制弹窗的显示和隐藏
 // signed是子组件向父组件传递的参数，表示合同签署成功
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'signed'])
 
 const agreed = ref(false) //作用是记录用户是否同意合同条款
 const submitting = ref(false) //创建一个用于控制签署流程的布尔值
@@ -149,6 +149,7 @@ const signContract = async () => {
             const payResult = await payDeposit(userId, deposit.value, houseId.value)
             if (payResult.code === 200) {
               ElMessage.success(`签署成功！账号余额为💰${payResult.balance}`)
+              emit('signed')
             }
           }
         }
