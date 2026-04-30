@@ -14,7 +14,7 @@
               <el-icon> <User /> </el-icon>&nbsp;用户账号
               <div class="pull-right">{{ currentUser.username }}</div>
             </li>
-            <li class="list-group-item">
+            <li v-if="role.id != 1" class="list-group-item">
               <el-icon> <Wallet /> </el-icon>&nbsp;账户余额
               <div class="pull-right">{{ currentUser.balance }}</div>
             </li>
