@@ -70,6 +70,10 @@
             <span class="label">押金规则:</span>
             <el-tag type="info" effect="light" size="large">{{ item.payment_method }}</el-tag>
           </div>
+          <div v-if="item.status != '租赁中'" class="order-content">
+            <span class="label">订单结果:</span>
+            <el-tag type="info" effect="light" size="large">{{ item.result || '无' }}</el-tag>
+          </div>
 
           <div class="order-status">
             <span class="label">状态:</span>
@@ -172,6 +176,7 @@ const resetFilters = () => {
 const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
+    已退租: 'warning',
     已完成: 'info',
   }
   return statusMap[status] || 'info'

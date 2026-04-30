@@ -66,8 +66,14 @@
             <el-tag type="info" effect="light" size="large">{{ item.regulations }}</el-tag>
           </div>
 
+          <div v-if="item.status != '租赁中'" class="card-content">
+            <span class="label">订单结果:</span>
+            <el-tag type="info" effect="light" size="large">{{ item.result || '无' }}</el-tag>
+          </div>
+
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
+            <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
@@ -96,6 +102,7 @@
 
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
+            <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
@@ -112,7 +119,7 @@
 </template>
 
 <script setup>
-import { getOrder, deleteOrder } from '@/util/api'
+import { getOrder, deleteOrder, moveOut } from '@/util/api'
 import { onMounted, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 
@@ -124,6 +131,7 @@ const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
     已完成: 'info',
+    已退租: 'warning',
   }
   return statusMap[status] || 'info'
 }
@@ -143,6 +151,28 @@ const delete_order = async (orderId) => {
     })
 
     await deleteOrder(orderId)
+    const updatedOrder = await getOrder(renterName)
+    orderData.value = updatedOrder
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error(error)
+    }
+  }
+}
+
+const move_out = async (order) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要提前退租？提前退租是违约行为将会根据"${order.regulations}"从押金内扣除一个月的月租作为违约金。`,
+      '提前退租',
+      {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+      },
+    )
+
+    await moveOut(order.id)
     const updatedOrder = await getOrder(renterName)
     orderData.value = updatedOrder
   } catch (error) {

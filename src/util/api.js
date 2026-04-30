@@ -345,3 +345,12 @@ export const payDeposit = async (userId, deposit, houseId) => {
   }
   return result.data
 }
+
+export const moveOut = async (orderId) => {
+  let result = await requestUtil.post('user/MoveOut', orderId)
+  if (result.data.code == 200) {
+    ElMessage.success(result.data.info)
+  } else {
+    ElMessage.error(result.data.errorInfo)
+  }
+}
