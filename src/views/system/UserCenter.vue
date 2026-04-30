@@ -53,7 +53,7 @@
             </div>
           </template>
           <el-tabs style="padding-left: 20px" v-model="activeTab">
-            <el-tab-pane label="基本资料" name="userInfo"
+            <el-tab-pane label="联系方式" name="userInfo"
               ><UserInfo :user="currentUser" @saved="handleUserSaved" />
             </el-tab-pane>
             <el-tab-pane label="修改密码" name="resetInfo">
@@ -68,9 +68,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import AvatarUpload from './AvatarUpload.vue'
-import UpdatePassword from './UpdatePassword.vue'
-import UserInfo from './UserInfo.vue'
+import AvatarUpload from '@/components/AvatarUpload.vue'
+import UpdatePassword from '@/components/UpdatePassword.vue'
+import UserInfo from '@/components/UserInfo.vue'
 const currentUser = ref(JSON.parse(sessionStorage.getItem('user')))
 const role = JSON.parse(sessionStorage.getItem('role'))
 const ifShow = ref(false)
