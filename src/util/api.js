@@ -113,7 +113,7 @@ export const getOrder = async (info) => {
 export const setOrder = async (info) => {
   let result = await requestUtil.post('house/SetOrder', info)
   if (result.data.code == 200) {
-    ElMessage.success(result.data.info)
+    null
   } else {
     ElMessage.error(result.data.errorInfo)
   }
@@ -339,8 +339,9 @@ export const payDeposit = async (userId, deposit, houseId) => {
     house_id: houseId,
   })
   if (result.data.code == 200) {
-    ElMessage.success('支付成功,账号余额为' + result.data.balance)
+    null
   } else {
     ElMessage.error(result.data.errorInfo)
   }
+  return result.data
 }

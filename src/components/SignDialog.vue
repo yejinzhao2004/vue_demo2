@@ -118,7 +118,7 @@ const signContract = async () => {
   submitting.value = true
   const balance = await getBalance(userId)
   ElMessageBox.confirm(
-    `确认支付押金${deposit.value}到账户${landlordName.value}吗？当前账户余额为${balance}`,
+    `确认支付押金💰${deposit.value}到账户${landlordName.value}吗？当前账户余额为💰${balance}`,
     '提示',
     {
       confirmButtonText: '确定',
@@ -128,7 +128,7 @@ const signContract = async () => {
   )
     .then(async () => {
       try {
-        if (balance < price.value) {
+        if (balance < deposit.value) {
           ElMessage.error('余额不足，请充值!')
         } else {
           const data = {
@@ -144,9 +144,12 @@ const signContract = async () => {
             deposit: deposit.value,
             payment_method: paymentMethod.value,
           }
-          const result = await setOrder(data)
-          if (result === 200) {
-            await payDeposit(userId, deposit.value, houseId.value)
+          const orderResult = await setOrder(data)
+          if (orderResult === 200) {
+            const payResult = await payDeposit(userId, deposit.value, houseId.value)
+            if (payResult.code === 200) {
+              ElMessage.success(`签署成功！账号余额为💰${payResult.balance}`)
+            }
           }
         }
       } catch (error) {

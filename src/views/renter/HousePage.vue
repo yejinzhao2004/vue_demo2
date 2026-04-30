@@ -214,11 +214,6 @@ const priceRange = reactive({
   max: null,
 })
 
-// 在组件挂载时加载数据
-onMounted(async () => {
-  houseList.value = await getVacantHouse()
-})
-
 // 计算是否有激活的筛选条件
 const hasActiveFilters = computed(() => {
   return searchKeyword.value.trim() !== '' || priceRange.min !== null || priceRange.max !== null
@@ -307,6 +302,10 @@ const sign = (house) => {
   signVisible.value = true
   signHouse.value = house
 }
+// 在组件挂载时加载数据
+onMounted(async () => {
+  houseList.value = await getVacantHouse()
+})
 </script>
 
 <style scoped>

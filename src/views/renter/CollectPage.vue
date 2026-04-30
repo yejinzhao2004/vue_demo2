@@ -22,6 +22,12 @@
                 <el-icon><Money /></el-icon>
                 月租：<span class="price-value">¥{{ house.price }}</span>
               </p>
+              <p class="house-status">
+                <el-icon><MostlyCloudy /></el-icon>
+                状态：<el-tag :type="getStatusTagType(house.status)">
+                  {{ house.status }}
+                </el-tag>
+              </p>
               <p class="house-time">
                 <el-icon><Clock /></el-icon>
                 收藏时间：<span>{{ house.collected_time }}</span>
@@ -106,6 +112,11 @@
           <el-descriptions-item label="电话号码">
             {{ currentHouse.landlord_phone_number }}
           </el-descriptions-item>
+          <el-descriptions-item label="状态">
+            <el-tag :type="getStatusTagType(currentHouse.status)">
+              {{ currentHouse.status }}
+            </el-tag>
+          </el-descriptions-item>
           <el-descriptions-item label="上传时间">
             {{ currentHouse.create_time }}
           </el-descriptions-item>
@@ -144,10 +155,16 @@ const reportVisible = ref(false)
 const signVisible = ref(false)
 const signHouse = ref(null)
 
-// 在组件挂载时加载数据
-onMounted(async () => {
-  houseList.value = await getRenterCollect(userId)
-})
+// 根据状态获取标签类型
+const getStatusTagType = (status) => {
+  const statusMap = {
+    已出租: 'success',
+    空闲中: 'primary',
+    未通过: 'danger',
+    下架中: 'info',
+  }
+  return statusMap[status] || 'info'
+}
 
 // 管理按钮命令处理
 const handleManageCommand = async (command, house) => {
@@ -195,6 +212,11 @@ const sign = (house) => {
   signVisible.value = true
   signHouse.value = house
 }
+
+// 在组件挂载时加载数据
+onMounted(async () => {
+  houseList.value = await getRenterCollect(userId)
+})
 </script>
 
 <style scoped>
@@ -275,7 +297,8 @@ const sign = (house) => {
 
 .house-address,
 .house-price,
-.house-time {
+.house-time,
+.house-status {
   margin: 8px 0;
   color: #666;
   font-size: 14px;
