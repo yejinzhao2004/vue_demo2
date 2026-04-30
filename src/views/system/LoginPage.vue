@@ -107,7 +107,7 @@ getCookie()
 .background {
   height: 100vh; /* 占满屏幕高度 */
   margin: 0;
-  background-image: url('../../../src/images/背景.jpg');
+  background-image: url('../../../src/assets/images/背景.jpg');
   background-size: cover; /* 图片铺满容器，保持比例，裁剪多余部分（登录页首选） */
   background-position: center center; /* 图片居中显示 */
   background-attachment: fixed; /* 滚动时背景固定 */
