@@ -52,11 +52,6 @@
           </div>
 
           <div class="order-content">
-            <span class="label">租赁时长:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.rental_duration }}</el-tag>
-          </div>
-
-          <div class="order-content">
             <span class="label">每月租金:</span>
             <el-tag type="info" effect="light" size="large">{{ formatPrice(item.price) }}</el-tag>
           </div>
@@ -87,6 +82,10 @@
             <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
           </div>
 
+          <div class="order-content">
+            <span class="label">截止日期:</span>
+            <el-tag type="info" effect="light" size="large">{{ item.rental_duration }}</el-tag>
+          </div>
           <div class="order-content">
             <span class="label">合约条例:</span>
             <el-tag type="info" effect="light" size="large">{{ item.regulations }}</el-tag>

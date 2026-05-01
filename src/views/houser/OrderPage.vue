@@ -30,11 +30,6 @@
           </div>
 
           <div class="card-content">
-            <span class="label">租赁时长:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.rental_duration }}</el-tag>
-          </div>
-
-          <div class="card-content">
             <span class="label">每月租金:</span>
             <el-tag type="info" effect="light" size="large">{{ formatPrice(item.price) }}</el-tag>
           </div>
@@ -59,6 +54,11 @@
           <div class="card-content">
             <span class="label">创建时间:</span>
             <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+          </div>
+
+          <div class="card-content">
+            <span class="label">截止日期:</span>
+            <el-tag type="info" effect="light" size="large">{{ item.rental_duration }}</el-tag>
           </div>
 
           <div class="card-content">
