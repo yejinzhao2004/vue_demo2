@@ -354,3 +354,13 @@ export const moveOut = async (orderId) => {
     ElMessage.error(result.data.errorInfo)
   }
 }
+
+export const payment = async (orderId, money) => {
+  let result = await requestUtil.post('user/Payment', { order_id: orderId, money: money })
+  if (result.data.code == 200) {
+    null
+  } else {
+    ElMessage.error(result.data.errorInfo)
+  }
+  return result.data.code
+}

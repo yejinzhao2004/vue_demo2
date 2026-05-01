@@ -92,7 +92,7 @@
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
 
-            <el-button type="primary" @click="payment(item)">房租缴费</el-button>
+            <el-button type="primary" @click="pay_ment(item)">房租缴费</el-button>
             <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
@@ -123,7 +123,7 @@
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
 
-            <el-button type="primary" @click="payment(item)">房租缴费</el-button>
+            <el-button type="primary" @click="pay_ment(item)">房租缴费</el-button>
             <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
@@ -141,9 +141,9 @@
 </template>
 
 <script setup>
-import { getOrder, deleteOrder, moveOut } from '@/util/api'
+import { getOrder, deleteOrder, moveOut, getBalance, payment } from '@/util/api'
 import { onMounted, ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 const renterName = JSON.parse(window.sessionStorage.getItem('user')).username
 let orderData = ref([])
@@ -204,17 +204,37 @@ const move_out = async (order) => {
   }
 }
 
-const payment = async (order) => {
+const pay_ment = async (order) => {
   try {
-    await ElMessageBox.confirm('确定要支付房租？', '支付房租', {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
-      type: 'warning',
-    })
-
-    await payment(order.id)
-    const updatedOrder = await getOrder(renterName)
-    orderData.value = updatedOrder
+    const user = JSON.parse(window.sessionStorage.getItem('user'))
+    let balance = await getBalance(user.id)
+    await ElMessageBox.prompt(
+      `确认缴费房租到账户${order.landlord}吗？当前账户余额为💰${balance}`,
+      '支付房租',
+      {
+        confirmButtonText: '确认支付',
+        cancelButtonText: '取消',
+        type: 'warning',
+        inputType: 'number',
+        inputValue: order.pending_amount, // 默认值为待付金额
+        inputPlaceholder: '请输入支付金额',
+      },
+    )
+      .then(async ({ value }) => {
+        // 用户点击确认，value 是输入的金额
+        console.log('用户确认支付金额:', value)
+        const result = await payment(order.id, value)
+        if (result === 200) {
+          balance -= value
+          ElMessage.success(`支付成功，当前账户余额为💰${balance}`)
+        }
+        const updatedOrder = await getOrder(renterName)
+        orderData.value = updatedOrder
+      })
+      .catch(() => {
+        // 用户取消
+        console.log('用户取消了支付')
+      })
   } catch (error) {
     if (error !== 'cancel') {
       console.error(error)
