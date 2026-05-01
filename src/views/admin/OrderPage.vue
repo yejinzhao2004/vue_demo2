@@ -13,7 +13,8 @@
 
       <el-select v-model="filters.status" placeholder="请选择状态" class="status-select" clearable>
         <el-option label="租赁中" value="租赁中" />
-        <el-option label="已完成" value="已完成" />
+        <el-option label="已到期" value="已到期" />
+        <el-option label="已退租" value="已退租" />
       </el-select>
 
       <el-button type="primary" @click="resetFilters">重置</el-button>
@@ -63,7 +64,27 @@
 
           <div class="order-content">
             <span class="label">押金规则:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.payment_method }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.payment_method }}</el-tag>
+          </div>
+          <div v-if="item.status == '租赁中'">
+            <div class="order-content">
+              <span class="label">应付金额:</span>
+              <el-tag type="info" effect="dark" size="large">{{
+                formatPrice(item.due_amount)
+              }}</el-tag>
+            </div>
+            <div class="order-content">
+              <span class="label">已付金额:</span>
+              <el-tag type="info" effect="dark" size="large">{{
+                formatPrice(item.paid_amount)
+              }}</el-tag>
+            </div>
+            <div class="order-content">
+              <span class="label">待付金额:</span>
+              <el-tag type="warning" effect="dark" size="large">{{
+                formatPrice(item.pending_amount)
+              }}</el-tag>
+            </div>
           </div>
           <div v-if="item.status != '租赁中'" class="order-content">
             <span class="label">订单结果:</span>

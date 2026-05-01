@@ -38,10 +38,28 @@
             <span class="label">押金总额:</span>
             <el-tag type="info" effect="dark" size="large">{{ formatPrice(item.deposit) }}</el-tag>
           </div>
-
           <div class="card-content">
             <span class="label">押金规则:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.payment_method }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.payment_method }}</el-tag>
+          </div>
+          <div class="card-content">
+            <span class="label">应付金额:</span>
+            <el-tag type="info" effect="dark" size="large">{{
+              formatPrice(item.due_amount)
+            }}</el-tag>
+          </div>
+          <div class="card-content">
+            <span class="label">已付金额:</span>
+            <el-tag type="info" effect="dark" size="large">{{
+              formatPrice(item.paid_amount)
+            }}</el-tag>
+          </div>
+
+          <div class="card-content">
+            <span class="label">待付金额:</span>
+            <el-tag type="warning" effect="dark" size="large">{{
+              formatPrice(item.pending_amount)
+            }}</el-tag>
           </div>
 
           <div class="card-status">
