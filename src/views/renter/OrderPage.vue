@@ -91,8 +91,9 @@
 
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
-            <el-button type="warning" @click="move_out(item)">提前退租</el-button>
+
             <el-button type="primary" @click="payment(item)">房租缴费</el-button>
+            <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
@@ -121,8 +122,9 @@
 
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
-            <el-button type="warning" @click="move_out(item)">提前退租</el-button>
+
             <el-button type="primary" @click="payment(item)">房租缴费</el-button>
+            <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
