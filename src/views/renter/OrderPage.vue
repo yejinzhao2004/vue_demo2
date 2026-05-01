@@ -215,17 +215,32 @@ const pay_ment = async (order) => {
         confirmButtonText: '确认支付',
         cancelButtonText: '取消',
         type: 'warning',
-        inputType: 'number',
-        inputValue: order.pending_amount, // 默认值为待付金额
         inputPlaceholder: '请输入支付金额',
+        inputValidator: (value) => {
+          const amount = Number(value)
+          if (!value || value === '') {
+            return '请输入支付金额'
+          }
+          if (isNaN(amount)) {
+            return '请输入有效的数字'
+          }
+          if (amount < 0) {
+            return '支付金额不能小于0'
+          }
+          if (amount > balance) {
+            return `余额不足，当前余额为💰${balance}`
+          }
+          return true
+        },
       },
     )
       .then(async ({ value }) => {
-        // 用户点击确认，value 是输入的金额
-        console.log('用户确认支付金额:', value)
-        const result = await payment(order.id, value)
+        // 用户点击确认，value 是输入的金额（字符串类型）
+        const amount = Number(value) // 转换为数字类型
+        console.log('用户确认支付金额:', amount)
+        const result = await payment(order.id, amount)
         if (result === 200) {
-          balance -= value
+          balance -= amount
           ElMessage.success(`支付成功，当前账户余额为💰${balance}`)
         }
         const updatedOrder = await getOrder(renterName)

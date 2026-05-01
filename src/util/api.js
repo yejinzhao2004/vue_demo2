@@ -355,8 +355,8 @@ export const moveOut = async (orderId) => {
   }
 }
 
-export const payment = async (orderId, money) => {
-  let result = await requestUtil.post('user/Payment', { order_id: orderId, money: money })
+export const payment = async (orderId, amount) => {
+  let result = await requestUtil.post('user/Payment', { order_id: orderId, amount: amount })
   if (result.data.code == 200) {
     null
   } else {
