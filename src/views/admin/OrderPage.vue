@@ -177,7 +177,7 @@ const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
     已退租: 'warning',
-    已完成: 'info',
+    已到期: 'info',
   }
   return statusMap[status] || 'info'
 }

@@ -70,12 +70,13 @@
             <span class="label">订单结果:</span>
             <el-tag type="info" effect="light" size="large">{{ item.result || '无' }}</el-tag>
           </div>
-          <div class="card-actions" v-if="item.status === '已完成'">
-            <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
-            <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
-          </div>
+
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
+          </div>
+          <div class="card-actions" v-else>
+            <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
+            <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
         </div>
         <div v-else>
@@ -129,7 +130,7 @@ const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
     已退租: 'warning',
-    已完成: 'info',
+    已到期: 'info',
   }
   return statusMap[status] || 'info'
 }

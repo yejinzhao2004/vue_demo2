@@ -74,6 +74,7 @@
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
             <el-button type="warning" @click="move_out(item)">提前退租</el-button>
+            <el-button type="primary" @click="payment(item)">房租缴费</el-button>
           </div>
           <div class="card-actions" v-else>
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
@@ -103,6 +104,7 @@
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
             <el-button type="warning" @click="move_out(item)">提前退租</el-button>
+            <el-button type="primary" @click="payment(item)">房租缴费</el-button>
           </div>
           <div class="card-actions" v-else>
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
@@ -130,7 +132,7 @@ let orderData = ref([])
 const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
-    已完成: 'info',
+    已到期: 'info',
     已退租: 'warning',
   }
   return statusMap[status] || 'info'
@@ -173,6 +175,24 @@ const move_out = async (order) => {
     )
 
     await moveOut(order.id)
+    const updatedOrder = await getOrder(renterName)
+    orderData.value = updatedOrder
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error(error)
+    }
+  }
+}
+
+const payment = async (order) => {
+  try {
+    await ElMessageBox.confirm('确定要支付房租？', '支付房租', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+
+    await payment(order.id)
     const updatedOrder = await getOrder(renterName)
     orderData.value = updatedOrder
   } catch (error) {
