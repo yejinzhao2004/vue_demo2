@@ -53,9 +53,7 @@
             :size="60"
             class="user-avatar"
           />
-          <el-avatar v-else :size="60" class="user-avatar">
-            {{ user.username?.charAt(0) }}
-          </el-avatar>
+          <el-avatar v-else :size="60" class="user-avatar"> 暂无 </el-avatar>
 
           <div class="user-basic-info">
             <h3 class="username">{{ user.username }}</h3>
