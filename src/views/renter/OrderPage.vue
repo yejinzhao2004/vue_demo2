@@ -122,8 +122,8 @@
 
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
-
             <el-button type="primary" @click="pay_ment(item)">房租缴费</el-button>
+            <el-button type="primary" @click="lease_renewal(item)">租赁续约</el-button>
             <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
@@ -185,7 +185,7 @@ const delete_order = async (orderId) => {
 const move_out = async (order) => {
   try {
     await ElMessageBox.confirm(
-      `确定要提前退租？提前退租是违约行为将会根据"${order.regulations}"从押金内扣除一个月的月租作为违约金。`,
+      `确定要提前退租吗？提前退租是违约行为将会根据"${order.regulations}"从押金内扣除一个月的月租作为违约金。`,
       '提前退租',
       {
         confirmButtonText: '确认',
@@ -215,7 +215,7 @@ const pay_ment = async (order) => {
         confirmButtonText: '确认支付',
         cancelButtonText: '取消',
         type: 'warning',
-        inputPlaceholder: '请输入支付金额',
+        inputPlaceholder: `当前待付金额:${order.pending_amount}`,
         inputValidator: (value) => {
           const amount = Number(value)
           if (!value || value === '') {
@@ -250,6 +250,28 @@ const pay_ment = async (order) => {
         // 用户取消
         console.log('用户取消了支付')
       })
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error(error)
+    }
+  }
+}
+
+const lease_renewal = async (order) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要进行租赁续约吗？当前租期期限为${order.rental_duration}租期会延长一年`,
+      '续租',
+      {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+      },
+    )
+
+    // await leaseRenewal(order.id)
+    const updatedOrder = await getOrder(renterName)
+    orderData.value = updatedOrder
   } catch (error) {
     if (error !== 'cancel') {
       console.error(error)
