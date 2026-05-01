@@ -28,7 +28,7 @@
           </div>
           <div class="order-content">
             <span class="label">房东电话:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.renter_phone }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.renter_phone }}</el-tag>
           </div>
           <div class="order-header">
             <span class="label">租客账号:</span>
@@ -36,29 +36,29 @@
           </div>
           <div class="order-content">
             <span class="label">租客电话:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.renter_phone }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.renter_phone }}</el-tag>
           </div>
           <div class="order-header">
             <span class="label">订单详情</span>
           </div>
           <div class="order-content">
             <span class="label">房源编号:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.house }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.house }}</el-tag>
           </div>
 
           <div class="order-content">
             <span class="label">房屋地址:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.position }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.position }}</el-tag>
           </div>
 
           <div class="order-content">
             <span class="label">每月租金:</span>
-            <el-tag type="info" effect="light" size="large">{{ formatPrice(item.price) }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ formatPrice(item.price) }}</el-tag>
           </div>
 
           <div class="order-content">
             <span class="label">押金总额:</span>
-            <el-tag type="info" effect="light" size="large">{{ formatPrice(item.deposit) }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ formatPrice(item.deposit) }}</el-tag>
           </div>
 
           <div class="order-content">
@@ -67,11 +67,13 @@
           </div>
           <div v-if="item.status != '租赁中'" class="order-content">
             <span class="label">订单结果:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.result || '无' }}</el-tag>
+            <el-tag type="info" effect="dark" size="large" class="wrap-text">{{
+              item.result || '无'
+            }}</el-tag>
           </div>
 
           <div class="order-status">
-            <span class="label">状态:</span>
+            <span class="label">订单状态:</span>
             <el-tag :type="getStatusType(item.status)" effect="dark" size="small">
               {{ item.status }}
             </el-tag>
@@ -79,16 +81,16 @@
 
           <div class="order-content">
             <span class="label">创建时间:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
           </div>
 
           <div class="order-content">
             <span class="label">截止日期:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.rental_duration }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.rental_duration }}</el-tag>
           </div>
           <div class="order-content">
             <span class="label">合约条例:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.regulations }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.regulations }}</el-tag>
           </div>
 
           <div class="order-actions" v-if="item.status !== '租赁中'">
@@ -109,12 +111,12 @@
           </div>
           <div class="order-content">
             <span class="label">房源编号:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.house }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.house }}</el-tag>
           </div>
 
           <div class="order-content">
             <span class="label">房屋地址:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.position }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.position }}</el-tag>
           </div>
           <div class="order-status">
             <span class="label">状态:</span>
@@ -244,6 +246,7 @@ onMounted(async () => {
 
 /* 卡片样式 */
 .order-card {
+  height: 500px;
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -302,5 +305,14 @@ onMounted(async () => {
   color: #606266;
   font-weight: 500;
   margin-right: 15px;
+}
+
+/* 文本换行样式 */
+.wrap-text {
+  white-space: normal !important;
+  word-break: break-all;
+  max-width: 70%;
+  height: auto;
+  padding: 10px;
 }
 </style>

@@ -10,11 +10,11 @@
         </div>
         <div class="card-content">
           <span class="label">举报内容:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.report_content }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.report_content }}</el-tag>
         </div>
         <div class="card-content">
           <span class="label">举报时间:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
         </div>
         <div class="card-status">
           <span class="label">状态:</span>

@@ -16,27 +16,27 @@
           </div>
           <div class="card-content">
             <span class="label">房东电话:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.landlord_phone }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.landlord_phone }}</el-tag>
           </div>
 
           <div class="card-content">
             <span class="label">房源编号:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.house }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.house }}</el-tag>
           </div>
 
           <div class="card-content">
             <span class="label">房屋地址:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.position }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.position }}</el-tag>
           </div>
 
           <div class="card-content">
             <span class="label">每月租金:</span>
-            <el-tag type="info" effect="light" size="large">{{ formatPrice(item.price) }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ formatPrice(item.price) }}</el-tag>
           </div>
 
           <div class="card-content">
             <span class="label">押金总额:</span>
-            <el-tag type="info" effect="light" size="large">{{ formatPrice(item.deposit) }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ formatPrice(item.deposit) }}</el-tag>
           </div>
 
           <div class="card-content">
@@ -53,22 +53,22 @@
 
           <div class="card-content">
             <span class="label">创建时间:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
           </div>
 
           <div class="card-content">
             <span class="label">截止日期:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.rental_duration }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.rental_duration }}</el-tag>
           </div>
 
           <div class="card-content">
             <span class="label">合约条例:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.regulations }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.regulations }}</el-tag>
           </div>
 
           <div v-if="item.status != '租赁中'" class="card-content">
             <span class="label">订单结果:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.result || '无' }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.result || '无' }}</el-tag>
           </div>
 
           <div class="card-actions" v-if="item.status === '租赁中'">
@@ -88,11 +88,11 @@
           </div>
           <div class="card-content">
             <span class="label">房源编号:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.house }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.house }}</el-tag>
           </div>
           <div class="card-content">
             <span class="label">房屋地址:</span>
-            <el-tag type="info" effect="light" size="large">{{ item.position }}</el-tag>
+            <el-tag type="info" effect="dark" size="large">{{ item.position }}</el-tag>
           </div>
           <div class="card-status">
             <span class="label">状态:</span>

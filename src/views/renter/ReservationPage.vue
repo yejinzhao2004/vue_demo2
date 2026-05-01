@@ -15,16 +15,16 @@
         </div>
         <div class="card-content">
           <span class="label">房东账号:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.landlord_name }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.landlord_name }}</el-tag>
         </div>
         <div class="card-content">
           <span class="label">房东电话:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.landlord_phone_number }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.landlord_phone_number }}</el-tag>
         </div>
 
         <div class="card-content">
           <span class="label">预约日期:</span>
-          <el-tag type="info" effect="light" size="large"
+          <el-tag type="info" effect="dark" size="large"
             >{{ item.scheduled_date }}——{{ item.scheduled_time }}</el-tag
           >
         </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="card-content">
           <span class="label">创建时间:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
         </div>
 
         <div class="card-actions" v-if="item.status === '预约已确认'">

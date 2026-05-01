@@ -69,32 +69,32 @@
         <div class="user-detail">
           <div class="detail-row">
             <span class="label">邮箱:</span>
-            <el-tag type="info" effect="light">{{ user.email || '暂无' }}</el-tag>
+            <el-tag type="info" effect="dark">{{ user.email || '暂无' }}</el-tag>
           </div>
 
           <div class="detail-row">
             <span class="label">手机号:</span>
-            <el-tag type="info" effect="light">{{ user.phone_number || '暂无' }}</el-tag>
+            <el-tag type="info" effect="dark">{{ user.phone_number || '暂无' }}</el-tag>
           </div>
 
           <div class="detail-row">
             <span class="label">最后登录时间:</span>
-            <el-tag type="info" effect="light">{{ user.login_date }}</el-tag>
+            <el-tag type="info" effect="dark">{{ user.login_date }}</el-tag>
           </div>
 
           <div class="detail-row">
             <span class="label">账户创建时间:</span>
-            <el-tag type="info" effect="light">{{ user.create_time }}</el-tag>
+            <el-tag type="info" effect="dark">{{ user.create_time }}</el-tag>
           </div>
 
           <div class="detail-row">
             <span class="label">资料更新时间:</span>
-            <el-tag type="info" effect="light">{{ user.update_time }}</el-tag>
+            <el-tag type="info" effect="dark">{{ user.update_time }}</el-tag>
           </div>
 
           <div class="detail-row">
             <span class="label">账号身份:</span>
-            <el-tag type="info" effect="light">{{ user.role_name }}</el-tag>
+            <el-tag type="info" effect="dark">{{ user.role_name }}</el-tag>
           </div>
         </div>
 

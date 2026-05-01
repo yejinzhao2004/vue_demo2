@@ -28,15 +28,15 @@
         </div>
         <div class="report-content">
           <span class="label">被举报房源编号:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.house_number }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.house_number }}</el-tag>
         </div>
         <div class="report-content">
           <span class="label">举报内容:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.report_content }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.report_content }}</el-tag>
         </div>
         <div class="report-content">
           <span class="label">举报时间:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
         </div>
         <div class="report-status">
           <span class="label">状态:</span>
@@ -46,7 +46,7 @@
         </div>
         <div class="report-content" v-if="item.status === '已处理'">
           <span class="label">处理结果:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.result }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.result }}</el-tag>
         </div>
         <div class="report-actions" v-if="item.status !== '待处理'">
           <el-button type="danger" @click="delete_report(item.id)">删除</el-button>

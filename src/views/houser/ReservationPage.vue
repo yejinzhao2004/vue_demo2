@@ -16,17 +16,17 @@
 
         <div class="card-content">
           <span class="label">租客姓名:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.renter_name }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.renter_name }}</el-tag>
         </div>
 
         <div class="card-content">
           <span class="label">租客电话:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.renter_phone_number }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.renter_phone_number }}</el-tag>
         </div>
 
         <div class="card-content">
           <span class="label">预约日期:</span>
-          <el-tag type="info" effect="light" size="large"
+          <el-tag type="info" effect="dark" size="large"
             >{{ item.scheduled_date }}——{{ item.scheduled_time }}</el-tag
           >
         </div>
@@ -38,7 +38,7 @@
         </div>
         <div class="card-content">
           <span class="label">创建时间:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
         </div>
 
         <!-- 当状态为预约待确认时显示操作按钮 -->

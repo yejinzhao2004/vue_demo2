@@ -36,17 +36,17 @@
         </div>
         <div class="reservation-content">
           <span class="label">租客姓名:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.renter_name }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.renter_name }}</el-tag>
         </div>
 
         <div class="reservation-content">
           <span class="label">房东姓名:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.landlord_name }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.landlord_name }}</el-tag>
         </div>
 
         <div class="reservation-content">
           <span class="label">预约日期:</span>
-          <el-tag type="info" effect="light" size="large"
+          <el-tag type="info" effect="dark" size="large"
             >{{ item.scheduled_date }}--{{ item.scheduled_time }}</el-tag
           >
         </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="reservation-content">
           <span class="label">创建时间:</span>
-          <el-tag type="info" effect="light" size="large">{{ item.create_time }}</el-tag>
+          <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
         </div>
 
         <div class="reservation-actions">

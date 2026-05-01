@@ -50,17 +50,17 @@
         <div class="house-detail">
           <div class="detail-row">
             <span class="label">房屋地址：</span>
-            <el-tag type="info" effect="light">{{ house.position }}</el-tag>
+            <el-tag type="info" effect="dark">{{ house.position }}</el-tag>
           </div>
 
           <div class="detail-row">
             <span class="label">房东账号：</span>
-            <el-tag type="info" effect="light">{{ house.landlord_name }}</el-tag>
+            <el-tag type="info" effect="dark">{{ house.landlord_name }}</el-tag>
           </div>
 
           <div class="detail-row">
             <span class="label">提交时间：</span>
-            <el-tag type="info" effect="light">{{ house.create_time }}</el-tag>
+            <el-tag type="info" effect="dark">{{ house.create_time }}</el-tag>
           </div>
 
           <div v-if="house.status === '未通过'" class="detail-row">
