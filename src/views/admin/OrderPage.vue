@@ -116,6 +116,12 @@
           </div>
           <div class="order-actions">
             <el-button type="primary" @click="item.visible = false">收起内容</el-button>
+            <el-button
+              v-if="item.status === '已结约' || item.status === '已退租'"
+              type="danger"
+              @click="delete_order(item.id)"
+              >删除</el-button
+            >
           </div>
         </div>
         <div v-else>
@@ -144,6 +150,12 @@
           </div>
           <div class="order-actions">
             <el-button type="primary" @click="item.visible = true">查看详情</el-button>
+            <el-button
+              v-if="item.status === '已结约' || item.status === '已退租'"
+              type="danger"
+              @click="delete_order(item.id)"
+              >删除</el-button
+            >
           </div>
         </div>
       </el-card>
@@ -155,8 +167,9 @@
 </template>
 
 <script setup>
-import { getOrderList } from '@/util/api'
+import { getOrderList, deleteOrder } from '@/util/api'
 import { onMounted, ref, computed } from 'vue'
+import { ElMessageBox } from 'element-plus'
 
 let orderData = ref([])
 // 筛选条件
@@ -207,6 +220,24 @@ const getStatusType = (status) => {
 const formatPrice = (price) => {
   if (!price) return '¥ 0.00'
   return `¥ ${parseFloat(price).toFixed(2)}`
+}
+
+const delete_order = async (orderId) => {
+  try {
+    await ElMessageBox.confirm('确定要删除这个订单？', '删除订单', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+
+    await deleteOrder(orderId)
+    const updatedOrder = await getOrderList()
+    orderData.value = updatedOrder.data
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error(error)
+    }
+  }
 }
 
 onMounted(async () => {
