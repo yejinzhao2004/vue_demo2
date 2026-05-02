@@ -94,7 +94,7 @@
           </div>
           <div class="card-actions" v-if="item.status === '待结约' || item.status === '待退租'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
-            <el-button type="warning">退还押金</el-button>
+            <el-button type="warning" @click="confirm_end_the_order(item)">退还押金</el-button>
           </div>
           <div class="card-actions" v-if="item.status === '已结约' || item.status === '已退租'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
@@ -126,7 +126,7 @@
           </div>
           <div class="card-actions" v-if="item.status === '待结约' || item.status === '待退租'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
-            <el-button type="warning">退还押金</el-button>
+            <el-button type="warning" @click="confirm_end_the_order(item)">退还押金</el-button>
           </div>
           <div class="card-actions" v-if="item.status === '已结约' || item.status === '已退租'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
@@ -146,7 +146,7 @@
 import { getOrder } from '@/util/api'
 import { onMounted, ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
-import { deleteOrder } from '@/util/api'
+import { deleteOrder, confirmEndTheOrder } from '@/util/api'
 
 const landlordName = JSON.parse(window.sessionStorage.getItem('user')).username
 let orderData = ref([])
@@ -157,8 +157,8 @@ const getStatusType = (status) => {
     租赁中: 'success',
     待退租: 'danger',
     待结约: 'warning',
-    已结约: 'info',
-    已退租: 'info',
+    已结约: 'warning',
+    已退租: 'danger',
   }
   return statusMap[status] || 'info'
 }
@@ -180,6 +180,35 @@ const delete_order = async (orderId) => {
     await deleteOrder(orderId)
     const updatedOrder = await getOrder(landlordName)
     orderData.value = updatedOrder
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error(error)
+    }
+  }
+}
+
+const confirm_end_the_order = async (order) => {
+  try {
+    if (order.pending_amount > 0) {
+      ElMessageBox.alert(
+        `当前租客待缴清金额为💰${formatPrice(order.pending_amount)}，请与租客联系缴费事宜，先缴清待缴清金额`,
+        '结束订单并退还押金',
+        {
+          confirmButtonText: '我知道了',
+          type: 'warning',
+        },
+      )
+    } else {
+      await ElMessageBox.confirm(`确定要结束这个订单吗并退回押金吗？`, '结束订单并退还押金', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+
+      await confirmEndTheOrder(order.id)
+      const updatedOrder = await getOrder(landlordName)
+      orderData.value = updatedOrder
+    }
   } catch (error) {
     if (error !== 'cancel') {
       console.error(error)

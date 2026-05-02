@@ -373,3 +373,12 @@ export const leaseRenewal = async (orderId) => {
     ElMessage.error(result.data.errorInfo)
   }
 }
+
+export const confirmEndTheOrder = async (orderId) => {
+  let result = await requestUtil.post('user/ConfirmEndTheOrder', orderId)
+  if (result.data.code == 200) {
+    ElMessage.success(result.data.info)
+  } else {
+    ElMessage.error(result.data.errorInfo)
+  }
+}

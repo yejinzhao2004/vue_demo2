@@ -162,8 +162,8 @@ const getStatusType = (status) => {
     租赁中: 'success',
     待退租: 'danger',
     待结约: 'warning',
-    已结约: 'info',
-    已退租: 'info',
+    已结约: 'warning',
+    已退租: 'danger',
   }
   return statusMap[status] || 'info'
 }
