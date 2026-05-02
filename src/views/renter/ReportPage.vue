@@ -2,7 +2,7 @@
   <div class="report-container">
     <h2 class="title">举报详情</h2>
 
-    <div v-if="reportData && reportData.length > 0">
+    <div v-if="reportData && reportData.length > 0" class="report-list">
       <el-card v-for="(item, index) in reportData" :key="index" class="report-card" shadow="always">
         <div class="card-header">
           <span class="label">房产编号:</span>
@@ -93,10 +93,17 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.report-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(470px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
 /* 容器样式 */
 .report-container {
   padding: 30px 60px 0px 60px;
-  width: 1100px;
+  width: 100%;
+  max-width: 1400px;
   background: #c4c2c2;
   height: 800px;
   box-sizing: border-box;

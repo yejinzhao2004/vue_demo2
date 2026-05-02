@@ -2,7 +2,7 @@
   <div class="reservation-container">
     <h2 class="title">预约状态</h2>
 
-    <div v-if="reservationData && reservationData.length > 0">
+    <div v-if="reservationData && reservationData.length > 0" class="reservation-list">
       <el-card
         v-for="(item, index) in reservationData"
         :key="index"
@@ -180,10 +180,17 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.reservation-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(470px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
 /* 容器样式 */
 .reservation-container {
   padding: 30px 60px 0px 60px;
-  width: 1100px;
+  width: 100%;
+  max-width: 1400px;
   background: #c4c2c2;
   height: 800px;
   box-sizing: border-box;

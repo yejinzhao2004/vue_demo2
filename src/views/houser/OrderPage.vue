@@ -2,7 +2,7 @@
   <div class="reservation-container">
     <h2 class="title">订单详情</h2>
 
-    <div v-if="orderData && orderData.length > 0">
+    <div v-if="orderData && orderData.length > 0" class="order-list">
       <el-card
         v-for="(item, index) in orderData"
         :key="index"
@@ -86,7 +86,9 @@
 
           <div v-if="item.status != '租赁中'" class="card-content">
             <span class="label">订单结果:</span>
-            <el-tag type="info" effect="dark" size="large">{{ item.result || '无' }}</el-tag>
+            <el-tag type="info" effect="dark" size="large" class="wrap-text">{{
+              item.result || '无'
+            }}</el-tag>
           </div>
 
           <div class="card-actions" v-if="item.status === '租赁中'">
@@ -223,10 +225,25 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+/* 文本换行样式 */
+.wrap-text {
+  white-space: normal !important;
+  word-break: break-all;
+  max-width: 70%;
+  height: auto;
+  padding: 10px;
+}
+.order-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(470px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
 /* 容器样式 */
 .reservation-container {
   padding: 30px 60px 0px 60px;
-  width: 1100px;
+  width: 100%;
+  max-width: 1400px;
   background: #c4c2c2;
   height: 800px;
   box-sizing: border-box;
