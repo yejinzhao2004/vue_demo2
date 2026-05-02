@@ -364,3 +364,12 @@ export const payment = async (orderId, amount) => {
   }
   return result.data.code
 }
+
+export const leaseRenewal = async (orderId) => {
+  let result = await requestUtil.post('user/LeaseRenewal', orderId)
+  if (result.data.code == 200) {
+    ElMessage.success(result.data.info)
+  } else {
+    ElMessage.error(result.data.errorInfo)
+  }
+}

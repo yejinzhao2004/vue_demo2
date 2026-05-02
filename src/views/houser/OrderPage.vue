@@ -70,7 +70,7 @@
           </div>
 
           <div class="card-content">
-            <span class="label">创建时间:</span>
+            <span class="label">签约日期:</span>
             <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
           </div>
 

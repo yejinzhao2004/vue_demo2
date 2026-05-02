@@ -70,7 +70,7 @@
           </div>
 
           <div class="card-content">
-            <span class="label">创建时间:</span>
+            <span class="label">签约日期:</span>
             <el-tag type="info" effect="dark" size="large">{{ item.create_time }}</el-tag>
           </div>
 
@@ -92,7 +92,8 @@
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
 
-            <el-button type="primary" @click="pay_ment(item)">房租缴费</el-button>
+            <el-button type="success" @click="pay_ment(item)">房租缴费</el-button>
+            <el-button type="primary" @click="lease_renewal(item)">租赁续约</el-button>
             <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
           <div class="card-actions" v-else>
@@ -122,7 +123,7 @@
 
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
-            <el-button type="primary" @click="pay_ment(item)">房租缴费</el-button>
+            <el-button type="success" @click="pay_ment(item)">房租缴费</el-button>
             <el-button type="primary" @click="lease_renewal(item)">租赁续约</el-button>
             <el-button type="warning" @click="move_out(item)">提前退租</el-button>
           </div>
@@ -141,7 +142,7 @@
 </template>
 
 <script setup>
-import { getOrder, deleteOrder, moveOut, getBalance, payment } from '@/util/api'
+import { getOrder, deleteOrder, moveOut, getBalance, payment, leaseRenewal } from '@/util/api'
 import { onMounted, ref } from 'vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 
@@ -269,7 +270,7 @@ const lease_renewal = async (order) => {
       },
     )
 
-    // await leaseRenewal(order.id)
+    await leaseRenewal(order.id)
     const updatedOrder = await getOrder(renterName)
     orderData.value = updatedOrder
   } catch (error) {
