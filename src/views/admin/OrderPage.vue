@@ -15,6 +15,7 @@
         <el-option label="租赁中" value="租赁中" />
         <el-option label="已到期" value="已到期" />
         <el-option label="已退租" value="已退租" />
+        <el-option label="待结约" value="待结约" />
       </el-select>
 
       <el-button type="primary" @click="resetFilters">重置</el-button>
@@ -113,11 +114,7 @@
             <span class="label">合约条例:</span>
             <el-tag type="info" effect="dark" size="large">{{ item.regulations }}</el-tag>
           </div>
-
-          <div class="order-actions" v-if="item.status !== '租赁中'">
-            <el-button type="primary" @click="item.visible = false">收起内容</el-button>
-          </div>
-          <div class="order-actions" v-else>
+          <div class="order-actions">
             <el-button type="primary" @click="item.visible = false">收起内容</el-button>
           </div>
         </div>
@@ -198,8 +195,10 @@ const resetFilters = () => {
 const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
-    已退租: 'warning',
-    已到期: 'info',
+    待退租: 'danger',
+    待结约: 'warning',
+    已结约: 'info',
+    已退租: 'info',
   }
   return statusMap[status] || 'info'
 }
