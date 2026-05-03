@@ -10,6 +10,10 @@ export default defineConfig({
     host: '0.0.0.0', // 添加这一行
     port: 5173, // 确保端口是5173
   },
+  preview: {
+    host: '0.0.0.0',
+    port: 5173,
+  },
   plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
