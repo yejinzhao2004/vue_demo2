@@ -116,12 +116,7 @@
           </div>
           <div class="order-actions">
             <el-button type="primary" @click="item.visible = false">收起内容</el-button>
-            <el-button
-              v-if="item.status === '已结约' || item.status === '已退租'"
-              type="danger"
-              @click="delete_order(item.id)"
-              >删除</el-button
-            >
+            <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
         </div>
         <div v-else>
@@ -150,12 +145,7 @@
           </div>
           <div class="order-actions">
             <el-button type="primary" @click="item.visible = true">查看详情</el-button>
-            <el-button
-              v-if="item.status === '已结约' || item.status === '已退租'"
-              type="danger"
-              @click="delete_order(item.id)"
-              >删除</el-button
-            >
+            <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
         </div>
       </el-card>

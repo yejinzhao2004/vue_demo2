@@ -370,7 +370,7 @@ onMounted(async () => {
 }
 
 .card-header {
-  background: linear-gradient(90deg, #3498db, #4fddf7);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   font-weight: bold;
   border-radius: 8px 8px 0 0;
