@@ -19,7 +19,7 @@ let baseUrl = 'https://jolliness-subscript-trustable.ngrok-free.dev/'
 
 const httpService = axios.create({
   baseURL: baseUrl,
-  timeout: 3000,
+  timeout: 20000,
 })
 //请求拦截器
 httpService.interceptors.request.use(
