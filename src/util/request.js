@@ -1,13 +1,22 @@
 import axios from 'axios'
+//本地局域网或本机访问
+// const getCurrentBaseUrl = () => {
+//   const backendHost = window.location.hostname // 当前页面的主机名,如果是本地主机访问则是localhost，如果是其他设备通过局域网访问，则获取局域网的IP
+//   const backendPort = '8000' // 后端服务端口
 
-const getCurrentBaseUrl = () => {
-  const backendHost = window.location.hostname // 当前页面的主机名,如果是本地主机访问则是localhost，如果是其他设备通过局域网访问，则获取局域网的IP
-  const backendPort = '8000' // 后端服务端口
+//   return `http://${backendHost}:${backendPort}/`
+// }
 
-  return `http://${backendHost}:${backendPort}/`
-}
+// let baseUrl = getCurrentBaseUrl()
+// const httpService = axios.create({
+//   baseURL: baseUrl,
+//   timeout: 3000,
+// })
 
-let baseUrl = getCurrentBaseUrl()
+// ngrok 访问
+// 直接修改为你的 ngrok 地址
+let baseUrl = 'https://jolliness-subscript-trustable.ngrok-free.dev/'
+
 const httpService = axios.create({
   baseURL: baseUrl,
   timeout: 3000,
