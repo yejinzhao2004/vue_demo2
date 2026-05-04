@@ -37,6 +37,11 @@ const router = createRouter({
           name: '管理员',
           children: [
             {
+              path: 'data',
+              name: '数据总览',
+              component: () => import('../views/admin/DataLine.vue'),
+            },
+            {
               path: 'user',
               name: '用户管理',
               component: () => import('../views/admin/UserPage.vue'),
