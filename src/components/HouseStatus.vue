@@ -72,7 +72,6 @@
                     <!-- 空闲中的房源 -->
                     <template v-if="house.status === '空闲中'">
                       <el-dropdown-item command="offline">暂时下架</el-dropdown-item>
-                      <el-dropdown-item command="viewings" divided> 看房记录 </el-dropdown-item>
                     </template>
 
                     <!-- 已下架的房源 -->
@@ -164,7 +163,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import { deleteHouse, housePublish, houseOffline, getHouseList } from '@/util/api'
 import { getUserInfo } from '@/util/api'
 import store from '@/store'
@@ -246,10 +245,6 @@ const handleManageCommand = async (command, house) => {
         .catch(() => {
           console.log('用户取消了操作')
         })
-      break
-    case 'viewings':
-      // 看房记录
-      ElMessage.info('看房记录功能待实现')
       break
     case 'delete':
       // 删除房源
