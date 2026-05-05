@@ -100,7 +100,7 @@
         <div v-if="user.role_name != '管理员'" class="user-actions">
           <el-button
             v-if="user.status === '启用'"
-            type="warning"
+            type="danger"
             size="small"
             @click="toggleStatus(user)"
           >
@@ -141,7 +141,7 @@ const filterForm = ref({
 // 状态映射
 const statusMap = {
   启用: { text: '启用', type: 'success' },
-  停用: { text: '停用', type: 'warning' },
+  停用: { text: '停用', type: 'danger' },
 }
 
 // 获取状态类型
