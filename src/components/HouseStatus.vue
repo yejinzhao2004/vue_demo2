@@ -66,10 +66,7 @@
                   <el-dropdown-menu>
                     <!-- 已出租的房源 -->
                     <template v-if="house.status === '已出租'">
-                      <el-dropdown-item command="renew">租赁合同</el-dropdown-item>
-                      <el-dropdown-item command="endRent">结束租赁</el-dropdown-item>
                       <el-dropdown-item command="tenantInfo" divided> 租客信息 </el-dropdown-item>
-                      <el-dropdown-item command="paymentRecord"> 缴费记录 </el-dropdown-item>
                     </template>
 
                     <!-- 空闲中的房源 -->
@@ -83,9 +80,7 @@
                       <el-dropdown-item command="publish">重新上架</el-dropdown-item>
                     </template>
                     <!-- 未通过的房源 -->
-                    <template v-if="house.status === '未通过'">
-                      <el-dropdown-item command="appeal">重新上诉</el-dropdown-item>
-                    </template>
+                    <template v-if="house.status === '未通过'"> </template>
                     <template v-if="house.status !== '已出租'">
                       <el-dropdown-item command="delete" divided>
                         <span style="color: #f56c6c">删除房源</span>
@@ -219,30 +214,9 @@ const handleManageCommand = async (command, house) => {
   console.log(`执行管理命令 ${command} 对房源:`, house.house_number)
 
   switch (command) {
-    case 'renew':
-      // 续租合同
-      ElMessage.info('租赁合同功能待实现')
-      break
-    case 'endRent':
-      // 结束租赁
-      ElMessageBox.confirm(`确定要结束房源 "${house.house_number}" 的租赁吗？`, '结束租赁', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-      })
-        .then(() => {
-          ElMessage.success('租赁已结束')
-        })
-        .catch(() => {
-          console.log('用户取消了操作')
-        })
-      break
     case 'tenantInfo':
       // 查看租客信息
       await showTenantInfo(house)
-      break
-    case 'paymentRecord':
-      // 缴费记录
-      ElMessage.info('缴费记录功能待实现')
       break
     case 'publish':
       // 重新发布
@@ -291,9 +265,6 @@ const handleManageCommand = async (command, house) => {
         .catch(() => {
           console.log('用户取消了操作')
         })
-      break
-    case 'appeal':
-      ElMessage.info('上诉功能待实现')
       break
   }
 }
