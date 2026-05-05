@@ -382,3 +382,12 @@ export const confirmEndTheOrder = async (orderId) => {
     ElMessage.error(result.data.errorInfo)
   }
 }
+export const getDataLine = async () => {
+  let result = await requestUtil.post('admin/GetDataLine')
+  if (result.data.code == 200) {
+    null
+  } else {
+    ElMessage.error(result.data.errorInfo)
+  }
+  return result.data
+}

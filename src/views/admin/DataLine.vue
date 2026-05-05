@@ -5,7 +5,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="4">
         <div class="overview-card">
           <div class="card-icon bg-blue">
-            <i class="el-icon-user"></i>
+            <el-icon><User /></el-icon>
           </div>
           <div class="card-content">
             <p class="card-title">用户总数</p>
@@ -18,7 +18,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="4">
         <div class="overview-card">
           <div class="card-icon bg-green">
-            <i class="el-icon-house"></i>
+            <el-icon><House /></el-icon>
           </div>
           <div class="card-content">
             <p class="card-title">房源总数</p>
@@ -31,7 +31,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="4">
         <div class="overview-card">
           <div class="card-icon bg-orange">
-            <i class="el-icon-document"></i>
+            <el-icon><List /></el-icon>
           </div>
           <div class="card-content">
             <p class="card-title">租赁中订单</p>
@@ -44,7 +44,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="4">
         <div class="overview-card">
           <div class="card-icon bg-purple">
-            <i class="el-icon-finished"></i>
+            <el-icon><Loading /></el-icon>
           </div>
           <div class="card-content">
             <p class="card-title">待审核房源</p>
@@ -57,7 +57,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="4">
         <div class="overview-card">
           <div class="card-icon bg-red">
-            <i class="el-icon-warning"></i>
+            <el-icon><Warning /></el-icon>
           </div>
           <div class="card-content">
             <p class="card-title">待处理举报</p>
@@ -70,7 +70,7 @@
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="4">
         <div class="overview-card">
           <div class="card-icon bg-teal">
-            <i class="el-icon-timer"></i>
+            <el-icon><List /></el-icon>
           </div>
           <div class="card-content">
             <p class="card-title">今日订单</p>
@@ -98,10 +98,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { ElMessage } from 'element-plus'
-import { getUserList, adminGetHouseList, getOrderList, adminGetReportedHouse } from '@/util/api'
+import { getDataLine } from '@/util/api'
 
-// 初始化各项统计数据
+// 响应式数据
 const userCount = ref(0)
 const houseCount = ref(0)
 const rentingOrderCount = ref(0)
@@ -110,126 +109,21 @@ const pendingReportCount = ref(0)
 const todayOrderCount = ref(0)
 const chartLoaded = ref(false)
 
-// 获取用户数量
-const loadUserCount = async () => {
+// 初始化数据
+onMounted(async () => {
   try {
-    const result = await getUserList({ page: 1, limit: 1 }) // 获取第一页一条数据，主要是为了获取总数
-    if (result && result.total !== undefined) {
-      userCount.value = result.total
-    } else {
-      userCount.value = 0
+    const result = await getDataLine()
+    if (result.code === 200) {
+      userCount.value = result.data.user_count
+      houseCount.value = result.data.house_count
+      rentingOrderCount.value = result.data.renting_order_count
+      pendingHouseCount.value = result.data.pending_house_count
+      pendingReportCount.value = result.data.pending_report_count
+      todayOrderCount.value = result.data.today_order_count
     }
   } catch (error) {
-    console.error('获取用户数量失败:', error)
-    userCount.value = 0
+    console.error('数据初始化失败:', error)
   }
-}
-
-// 获取房源数量
-const loadHouseCount = async () => {
-  try {
-    const result = await adminGetHouseList({ page: 1, limit: 1, status: '' }) // 获取所有房源
-    if (result && result.total !== undefined) {
-      houseCount.value = result.total
-    } else {
-      houseCount.value = 0
-    }
-  } catch (error) {
-    console.error('获取房源数量失败:', error)
-    houseCount.value = 0
-  }
-}
-
-// 获取租赁中订单数量
-const loadRentingOrderCount = async () => {
-  try {
-    // 这里需要获取租赁中的订单，暂时用全部订单代替
-    const result = await getOrderList({ page: 1, limit: 1 })
-    if (result && result.total !== undefined) {
-      rentingOrderCount.value = result.total
-    } else {
-      rentingOrderCount.value = 0
-    }
-  } catch (error) {
-    console.error('获取订单数量失败:', error)
-    rentingOrderCount.value = 0
-  }
-}
-
-// 获取待审核房源数量
-const loadPendingHouseCount = async () => {
-  try {
-    // 获取审核状态为待审核的房源
-    const result = await adminGetHouseList({ page: 1, limit: 1, status: 'pending' })
-    if (result && result.total !== undefined) {
-      pendingHouseCount.value = result.total
-    } else {
-      pendingHouseCount.value = 0
-    }
-  } catch (error) {
-    console.error('获取待审核房源数量失败:', error)
-    pendingHouseCount.value = 0
-  }
-}
-
-// 获取待处理举报数量
-const loadPendingReportCount = async () => {
-  try {
-    const result = await adminGetReportedHouse({ page: 1, limit: 1, status: 'pending' })
-    if (result && result.total !== undefined) {
-      pendingReportCount.value = result.total
-    } else {
-      pendingReportCount.value = 0
-    }
-  } catch (error) {
-    console.error('获取待处理举报数量失败:', error)
-    pendingReportCount.value = 0
-  }
-}
-
-// 获取今日订单数量
-const loadTodayOrderCount = async () => {
-  try {
-    // 这里可能需要一个专门获取今日订单的API，暂时用全部订单代替
-    const result = await getOrderList({ page: 1, limit: 1, date: 'today' })
-    if (result && result.total !== undefined) {
-      todayOrderCount.value = result.total
-    } else {
-      todayOrderCount.value = 0
-    }
-  } catch (error) {
-    console.error('获取今日订单数量失败:', error)
-    todayOrderCount.value = 0
-  }
-}
-
-// 加载所有数据
-const loadData = async () => {
-  try {
-    // 并行加载所有数据
-    await Promise.all([
-      loadUserCount(),
-      loadHouseCount(),
-      loadRentingOrderCount(),
-      loadPendingHouseCount(),
-      loadPendingReportCount(),
-      loadTodayOrderCount(),
-    ])
-
-    // 模拟图表加载
-    setTimeout(() => {
-      chartLoaded.value = true
-    }, 1000)
-
-    ElMessage.success('数据加载成功')
-  } catch (error) {
-    console.error('数据加载失败:', error)
-    ElMessage.error('数据加载失败，请稍后重试')
-  }
-}
-
-onMounted(() => {
-  loadData()
 })
 </script>
 
@@ -251,6 +145,7 @@ onMounted(() => {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   background-color: #fff;
   transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
 .overview-card:hover {
