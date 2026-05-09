@@ -101,7 +101,7 @@
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
             <el-button type="success" @click="pay_ment(item)">房租缴费</el-button>
           </div>
-          <div class="card-actions" v-if="item.status === '已结约' || item.status === '已退租'">
+          <div class="card-actions" v-if="item.status === '已解约' || item.status === '已退租'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
             <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
@@ -136,7 +136,7 @@
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
             <el-button type="success" @click="pay_ment(item)">房租缴费</el-button>
           </div>
-          <div class="card-actions" v-if="item.status === '已结约' || item.status === '已退租'">
+          <div class="card-actions" v-if="item.status === '已解约' || item.status === '已退租'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
             <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
@@ -164,7 +164,7 @@ const getStatusType = (status) => {
     租赁中: 'success',
     待退租: 'danger',
     待解约: 'warning',
-    已结约: 'warning',
+    已解约: 'warning',
     已退租: 'danger',
   }
   return statusMap[status] || 'info'

@@ -200,7 +200,7 @@ const getStatusType = (status) => {
     租赁中: 'success',
     待退租: 'danger',
     待解约: 'warning',
-    已结约: 'warning',
+    已解约: 'warning',
     已退租: 'danger',
   }
   return statusMap[status] || 'info'
