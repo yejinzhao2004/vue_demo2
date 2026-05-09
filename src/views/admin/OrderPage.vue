@@ -15,7 +15,7 @@
         <el-option label="租赁中" value="租赁中" />
         <el-option label="已到期" value="已到期" />
         <el-option label="已退租" value="已退租" />
-        <el-option label="待解约" value="待解约" />
+        <el-option label="待结单" value="待结单" />
       </el-select>
 
       <el-button type="primary" @click="resetFilters">重置</el-button>
@@ -199,8 +199,8 @@ const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
     待退租: 'danger',
-    待解约: 'warning',
-    已解约: 'warning',
+    待结单: 'warning',
+    已结单: 'warning',
     已退租: 'danger',
   }
   return statusMap[status] || 'info'
