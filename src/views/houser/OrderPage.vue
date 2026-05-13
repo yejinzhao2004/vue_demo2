@@ -94,11 +94,11 @@
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
           </div>
-          <div class="card-actions" v-if="item.status === '待结单' || item.status === '待退租'">
+          <div class="card-actions" v-if="item.status === '待完结' || item.status === '待退租'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
             <el-button type="warning" @click="confirm_end_the_order(item)">退还押金</el-button>
           </div>
-          <div class="card-actions" v-if="item.status === '已结单' || item.status === '已退租'">
+          <div class="card-actions" v-if="item.status === '已完结' || item.status === '已退租'">
             <el-button type="info" @click="item.order_visible = false">收起详情</el-button>
             <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
@@ -126,11 +126,11 @@
           <div class="card-actions" v-if="item.status === '租赁中'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
           </div>
-          <div class="card-actions" v-if="item.status === '待结单' || item.status === '待退租'">
+          <div class="card-actions" v-if="item.status === '待完结' || item.status === '待退租'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
             <el-button type="warning" @click="confirm_end_the_order(item)">退还押金</el-button>
           </div>
-          <div class="card-actions" v-if="item.status === '已结单' || item.status === '已退租'">
+          <div class="card-actions" v-if="item.status === '已完结' || item.status === '已退租'">
             <el-button type="info" @click="item.order_visible = true">展开详情</el-button>
             <el-button type="danger" @click="delete_order(item.id)">删除</el-button>
           </div>
@@ -158,8 +158,8 @@ const getStatusType = (status) => {
   const statusMap = {
     租赁中: 'success',
     待退租: 'danger',
-    待结单: 'warning',
-    已结单: 'warning',
+    待完结: 'warning',
+    已完结: 'warning',
     已退租: 'danger',
   }
   return statusMap[status] || 'info'
